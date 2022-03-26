@@ -1,0 +1,407 @@
+<rom>
+	<romid>
+		<xmlid>D6HB200A</xmlid>
+		<internalidaddress>200</internalidaddress>
+		<internalidstring>D6HB200A</internalidstring>
+		<make>Subaru</make>
+		<market>JDM</market>
+		<model>Legacy</model>
+		<submodel>3.0DOHC</submodel>
+		<transmission>Auto</transmission>
+		<year>2002</year>
+		<flashmethod>wrx02</flashmethod>
+		<memmodel>68HC16Y5</memmodel>
+	</romid>
+	<notes>2020-04-29: Definition by: dschultz, SergArb and others</notes>
+	<include>16BITBASE</include>
+	<scaling name="16bitVolts" units="Volts" toexpr="x*0.0000762939453125" frexpr="x/0.0000762939453125" format="%.2f" min="0" max="5" inc="1" storagetype="uint16" endian="big"/>
+	<scaling name="BaroCorr" units="units" toexpr="x-128" frexpr="x+128" format="%.0f" min="0" max="255" inc="1" storagetype="uint8" endian="big"/>
+	<scaling name="raw16" units="units" toexpr="x" frexpr="x" format="%.0f" min="0" max="65536" inc="1" storagetype="uint16" endian="big"/>
+	<table name="1 - Atmospheric Pressure Correction" category="Fueling - Primary Open Loop" address="287b0" type="2D" level="1" scaling="BaroCorr">
+		<description>Step 1: Get the ATM correction value to be multiplied with the Manifold Pressure Compensation</description>
+		<table name="Atmospheric Pressure (psi) ?" type="Static X Axis" elements="5">
+			<data>9.75</data>
+			<data>10.98</data>
+			<data>12.22</data>
+			<data>13.46</data>
+			<data>14.70</data>
+		</table>
+	</table>
+	<table name="2 - Manifold Pressure Compensation" category="Fueling - Primary Open Loop" address="287e6" type="3D" level="1" scaling="rawecuvalue">
+		<description>Step 2: Use MAPv (as Engine Load) and RPM to lookup value and multiple it with ATM Correction Correction</description>
+		<table name="Engine Load" address="287d2" type="X Axis" elements="9" scaling="g/rev"/>
+		<table name="Engine Speed" address="287b5" type="Y Axis" elements="14" scaling="EngineSpeed(RPM)"/>
+	</table>
+	<table name="3 - Initial Fuel Load" category="Fueling - Primary Open Loop" address="2865f" type="2D" level="1" scaling="raw16">
+		<description>Step 3: Using MAPv (as Engine Load) lookup initial fuel load. This value is multiplied with the final vale of 'Manifold Pressure Compensation'</description>
+		<table name="Engine Load" address="28649" type="X Axis" elements="10" scaling="g/rev"/>
+	</table>
+	<table name="4 - Volumetric Efficiency" category="Fueling - Primary Open Loop" address="286b4" type="3D" level="1" scaling="rawecuvalue">
+		<description>Step 4: Use MAPv (as Engine Load) and RPM to lookup value. The result of this table is multiplied with the result of the 'Initial Fuel Load' and multiplied with the final value of Step 2. This final value is used in various other locations such as AF Learning and CL/OL Transition.</description>
+		<table name="Engine Load" address="2869e" type="X Axis" elements="10" scaling="g/rev"/>
+		<table name="Engine Speed" address="28673" type="Y Axis" elements="21" scaling="EngineSpeed(RPM)"/>
+	</table>
+	<table name="Manifold Pressure Sensor High Input (CEL)" address="2b312">
+	</table>
+	<table name="Manifold Pressure Sensor CEL Delay (High Input)" address="2b314">
+	</table>
+	<table name="Manifold Pressure Sensor Low Input (CEL)" address="2b315">
+	</table>
+	<table name="Manifold Pressure Sensor CEL Delay (Low Input)" address="2b317">
+	</table>
+	<table name="Primary Open Loop Fueling A" address="291ca">
+		<table name="Engine Load" address="291b2" elements="11"/>
+		<table name="Engine Speed" address="29187" elements="21"/>
+	</table>
+	<table name="Primary Open Loop Fueling B" address="293e2">
+		<table name="Engine Load" address="293ca" elements="11"/>
+		<table name="Engine Speed" address="2939f" elements="21"/>
+	</table>
+	<table name="Minimum Active Primary Open Loop Enrichment" address="292b3">
+	</table>
+	<table name="Minimum Primary Fueling CL to OL Intermediate Enrich" address="292b7">
+	</table>
+	<table name="Maximum Primary Fueling CL to OL Intermediate Steps" address="292bd">
+	</table>
+	<table name="Front Oxygen Sensor Scaling" address="282e0">
+		<table name="Front Oxygen Sensor" address="282c4"/>
+	</table>
+	<table name="Front Oxygen Sensor 2 Scaling" category="Fueling - Closed Loop" address="28316" type="2D" level="2" scaling="Air/FuelRatio">
+		<table name="Front Oxygen Sensor" address="282fa" type="Y Axis" elements="13" scaling="mA"/>
+	</table>
+	<table name="CL to OL Delay" address="292d2">
+	</table>
+	<table name="CL to OL Transition with Delay Throttle Hysteresis" address="292bf">
+	</table>
+	<table name="CL to OL Transition with Delay BPW Hysteresis_" address="292c0">
+	</table>
+	<table name="CL Delay Maximum Engine Speed" address="292c4">
+	</table>
+	<table name="CL Delay Minimum (ECT)" address="292c2">
+	</table>
+	<table name="CL Delay Maximum (Throttle) (Low Atm. Pressure)(AT)" address="292ca">
+	</table>
+	<table name="CL Delay Maximum (Throttle) (High Atm. Pressure)(AT)" address="292c8">
+	</table>
+	<table name="Injector Latency" address="287a2">
+	</table>
+	<table name="Base Timing A_" address="29878">
+		<table name="Engine Load" address="29862" elements="10" scaling="g/rev"/>
+		<table name="Engine Speed" address="2983b" elements="19"/>
+	</table>
+	<table name="Base Timing B_" address="29973">
+		<table name="Engine Load" address="2995d" elements="10" scaling="g/rev"/>
+		<table name="Engine Speed" address="29936" elements="19"/>
+	</table>
+	<table name="Base Timing A" address="29a6e">
+		<table name="Engine Load" address="29a58" elements="10" scaling="g/rev"/>
+		<table name="Engine Speed" address="29a31" elements="19"/>
+	</table>
+	<table name="Base Timing B" address="29b69">
+		<table name="Engine Load" address="29b53" elements="10" scaling="g/rev"/>
+		<table name="Engine Speed" address="29b2c" elements="19"/>
+	</table>
+	<table name="Alternate Base Timing Map" address="2ae07" category="Ignition Timing - Advance" type="3D" level="1" scaling="BaseIgnitionTiming(degreesBTDC)">
+		<description>An alternate timing map used when Base Timing A, B, A_, B_ are not used. Maybe a failsafe ...</description>
+		<table name="Engine Load" address="2adf1" type="X Axis" elements="10" scaling="g/rev"/>
+		<table name="Engine Speed" address="2adce" type="Y Axis" elements="17" scaling="RPM"/>
+	</table>
+	<table name="Base Timing Idle (Neutral)" address="29810">
+	</table>
+	<table name="Base Timing Idle (In-Gear)(Above Speed Threshold)" address="297f2">
+	</table>
+	<table name="Base Timing Idle (In-Gear)(Below Speed Threshold)" address="29801">
+	</table>
+	<table name="Base Timing Idle Vehicle Speed Threshold" address="297e8">
+	</table>
+	<table name="Knock Correction Advance Max" address="29f7f">
+		<table name="Engine Load" address="29f73" elements="5"/>
+		<table name="Engine Speed" address="29f48" elements="21"/>
+	</table>
+	<table name="Speed Limiting (Fuel Cut) - AT" category="Miscellaneous - Limits" address="29767" type="2D" level="4" scaling="VehicleSpeed(MPH)">
+		<description>Vehicle speed at which fuel is cut.</description>
+		<table name="Fuel Cut - Transmission Type" type="Static Y Axis" elements="2">
+			<data>On Above - AT</data>
+			<data>Off Below - AT</data>
+		</table>
+	</table>
+	<table name="Rev Limit (Fuel Cut)" address="2973d">
+	</table>
+	<table name="Intake Temp Sensor Scaling" address="281fc">
+	</table>
+	<table name="Coolant Temp Sensor Scaling" address="281b8">
+	</table>
+	<table name="Idle Speed Target A (MT)" address="2AC93">
+	</table>
+	<table name="Idle Speed Target A (AT)" address="2a2a2">
+	</table>
+	<table name="Idle Speed Target B (AT)" address="2a2c8">
+	</table>
+	<table name="Idle Speed Target C (AT)" address="2a2ee">
+	</table>
+	<table name="Idle Speed Target D (AT)" address="2a314">
+	</table>
+	<table name="Idle Speed Target A (MT)" address="2AC93">
+	</table>
+	<table name="Min Idle Speed A/C (AT)" address="2a336">
+	</table>
+	<table name="Min Idle Speed Startup (AT)" address="2a4fb">
+	</table>
+	<table name="Min Idle Speed High Electrical Load (AT)" address="2a4f7">
+	</table>
+
+    <table name="(P0031) FRONT O2 SENSOR LOW INPUT" storageaddress="2CAB9" />
+    <table name="(P0032) FRONT O2 SENSOR HIGH INPUT" storageaddress="2CAB1" />
+    <table name="(P0037) REAR O2 SENSOR LOW INPUT" storageaddress="2CAB5" />
+    <table name="(P0038) REAR O2 SENSOR HIGH INPUT" storageaddress="2CAAD" />
+	<scaling name="(P0051)HO2SCIRCUITLOWB2S1" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="040051"/>
+	</scaling>
+	<table name="(P0051) HO2S CIRCUIT LOW B2 S1" category="Diagnostic Trouble Codes" type="1D" scaling="(P0051)HO2SCIRCUITLOWB2S1" storageaddress="2CB25">
+		<description>HO2S CIRCUIT LOW B2 S1. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+	<scaling name="(P0052)HO2SCIRCUITHIGHB2S1" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="040052"/>
+	</scaling>
+	<table name="(P0052) HO2S CIRCUIT HIGH B2 S1" category="Diagnostic Trouble Codes" type="1D" scaling="(P0052)HO2SCIRCUITHIGHB2S1" storageaddress="2CB21">
+		<description>HO2S CIRCUIT HIGH B2 S1. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+    <table name="(P0106) PRESSURE SENSOR RANGE" storageaddress="2CACD" />
+    <table name="(P0107) MAP SENSOR LOW INPUT" storageaddress="2CAD1" />
+    <table name="(P0108) MAP SENSOR HIGH INPUT" storageaddress="2CAD5" />
+    <table name="(P0111) IAT SENSOR RANGE/PERF" storageaddress="2CAA5" />
+    <table name="(P0112) IAT SENSOR LOW INPUT" storageaddress="2CA9D" />
+    <table name="(P0113) IAT SENSOR HIGH INPUT" storageaddress="2CAA1" />
+    <table name="(P0117) COOLANT TEMP SENSOR LOW INPUT" storageaddress="2C7F1" />
+    <table name="(P0118) COOLANT TEMP SENSOR HIGH INPUT" storageaddress="2C7F5" />
+    <table name="(P0121) TPS RANGE/PERF" storageaddress="2C7E9" />
+    <table name="(P0122) TPS A LOW INPUT" storageaddress="2C7DD" />
+    <table name="(P0123) TPS A HIGH INPUT" storageaddress="2C7E1" />
+    <table name="(P0125) INSUFFICIENT COOLANT TEMP (FUELING)" storageaddress="2C7FD" />
+    <table name="(P0128) THERMOSTAT MALFUNCTION" storageaddress="2CB2D" />
+    <table name="(P0131) FRONT O2 SENSOR LOW INPUT" storageaddress="2CA81" />
+    <table name="(P0132) FRONT O2 SENSOR HIGH INPUT" storageaddress="2CA89" />
+    <table name="(P0133) FRONT O2 SENSOR SLOW RESPONSE" storageaddress="2C9E9" />
+    <table name="(P0137) REAR O2 SENSOR LOW VOLTAGE" storageaddress="2CA79" />
+    <table name="(P0138) REAR O2 SENSOR HIGH VOLTAGE" storageaddress="2CA91" />
+    <table name="(P0139) REAR O2 SENSOR SLOW RESPONSE" storageaddress="2C9F1" />
+	<scaling name="(P0151)O2SENSORCIRCUITLOWB2S1" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="040151"/>
+	</scaling>
+	<table name="(P0151) O2 SENSOR CIRCUIT LOW B2 S1" category="Diagnostic Trouble Codes" type="1D" scaling="(P0151)O2SENSORCIRCUITLOWB2S1" storageaddress="2CA85">
+		<description>O2 SENSOR CIRCUIT LOW B2 S1. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+	<scaling name="(P0152)O2SENSORCIRCUITHIGHB2S1" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="040152"/>
+	</scaling>
+	<table name="(P0152) O2 SENSOR CIRCUIT HIGH B2 S1" category="Diagnostic Trouble Codes" type="1D" scaling="(P0152)O2SENSORCIRCUITHIGHB2S1" storageaddress="2CA8D">
+		<description>O2 SENSOR CIRCUIT HIGH B2 S1. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+	<scaling name="(P0153)O2SENSORCIRCUITSLOWRESPONSEB2S1" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="030153"/>
+	</scaling>
+	<table name="(P0153) O2 SENSOR CIRCUIT SLOW RESPONSE B2 S1" category="Diagnostic Trouble Codes" type="1D" scaling="(P0153)O2SENSORCIRCUITSLOWRESPONSEB2S1" storageaddress="2CA95">
+		<description>O2 SENSOR CIRCUIT SLOW RESPONSE B2 S1. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+    <table name="(P0171) SYSTEM TOO LEAN" storageaddress="2CA25" />
+    <table name="(P0172) SYSTEM TOO RICH" storageaddress="2CA29" />
+	<scaling name="(P0174)SYSTEMTOOLEANB2" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="020174"/>
+	</scaling>
+	<table name="(P0174) SYSTEM TOO LEAN B2" category="Diagnostic Trouble Codes" type="1D" scaling="(P0174)SYSTEMTOOLEANB2" storageaddress="2CA01">
+		<description>SYSTEM TOO LEAN B2. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+	<scaling name="(P0175)SYSTEMTOORICHB2" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="020175"/>
+	</scaling>
+	<table name="(P0175) SYSTEM TOO RICH B2" category="Diagnostic Trouble Codes" type="1D" scaling="(P0175)SYSTEMTOORICHB2" storageaddress="2CA05">
+		<description>SYSTEM TOO RICH B2. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+    <table name="(P0181) FUEL TEMP SENSOR A RANGE/PERF" storageaddress="2C875" />
+    <table name="(P0182) FUEL TEMP SENSOR A LOW INPUT" storageaddress="2C86D" />
+    <table name="(P0183) FUEL TEMP SENSOR A HIGH INPUT" storageaddress="2C871" />
+	<scaling name="(P0222)TPSBLOWINPUT" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="0F0222"/>
+	</scaling>
+	<table name="(P0222) TPS B LOW INPUT" category="Diagnostic Trouble Codes" type="1D" scaling="(P0222)TPSBLOWINPUT" storageaddress="2C955">
+		<description>TPS B LOW INPUT. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+	<scaling name="(P0223)TPSBHIGHINPUT" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="100223"/>
+	</scaling>
+	<table name="(P0223) TPS B HIGH INPUT" category="Diagnostic Trouble Codes" type="1D" scaling="(P0223)TPSBHIGHINPUT" storageaddress="2C979">
+		<description>TPS B HIGH INPUT. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+    <table name="(P0230) FUEL PUMP PRIMARY CIRCUIT" storageaddress="2CB4D" />
+    <table name="(P0301) MISFIRE CYLINDER 1" storageaddress="2CA31" />
+    <table name="(P0302) MISFIRE CYLINDER 2" storageaddress="2CA35" />
+    <table name="(P0303) MISFIRE CYLINDER 3" storageaddress="2CA39" />
+    <table name="(P0304) MISFIRE CYLINDER 4" storageaddress="2CA3D" />
+	<scaling name="(P0305)MISFIRECYLINDER5" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="050305"/>
+	</scaling>
+	<table name="(P0305) MISFIRE CYLINDER 5" category="Diagnostic Trouble Codes" type="1D" scaling="(P0305)MISFIRECYLINDER5" storageaddress="2CA41">
+		<description>MISFIRE CYLINDER 5. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+	<scaling name="(P0306)MISFIRECYLINDER6" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="050306"/>
+	</scaling>
+	<table name="(P0306) MISFIRE CYLINDER 6" category="Diagnostic Trouble Codes" type="1D" scaling="(P0306)MISFIRECYLINDER6" storageaddress="2CA45">
+		<description>MISFIRE CYLINDER 6. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+    <table name="(P0327) KNOCK SENSOR 1 LOW INPUT" storageaddress="2C7D5" />
+    <table name="(P0328) KNOCK SENSOR 1 HIGH INPUT" storageaddress="2C7D9" />
+	<scaling name="(P0332)KNOCKSENSOR2LOWINPUT" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="040332"/>
+	</scaling>
+	<table name="(P0332) KNOCK SENSOR 2 LOW INPUT" category="Diagnostic Trouble Codes" type="1D" scaling="(P0332)KNOCKSENSOR2LOWINPUT" storageaddress="2C7C1">
+		<description>KNOCK SENSOR 2 LOW INPUT. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+	<scaling name="(P0333)KNOCKSENSOR2HIGHINPUT" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="040333"/>
+	</scaling>
+	<table name="(P0333) KNOCK SENSOR 2 HIGH INPUT" category="Diagnostic Trouble Codes" type="1D" scaling="(P0333)KNOCKSENSOR2HIGHINPUT" storageaddress="2C7C5">
+		<description>KNOCK SENSOR 2 HIGH INPUT. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+    <table name="(P0335) CRANKSHAFT POS. SENSOR A MALFUNCTION" storageaddress="2C785" />
+    <table name="(P0336) CRANKSHAFT POS. SENSOR A RANGE/PERF" storageaddress="2C78D" />
+    <table name="(P0340) CAMSHAFT POS. SENSOR A MALFUNCTION" storageaddress="2C795" />
+    <table name="(P0341) CAMSHAFT POS. SENSOR A RANGE/PERF" storageaddress="2C791" />
+	<scaling name="(P0400)EGRFLOW" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="030400"/>
+	</scaling>
+	<table name="(P0400) EGR FLOW" category="Diagnostic Trouble Codes" type="1D" scaling="(P0400)EGRFLOW" storageaddress="2CA1D">
+		<description>EGR FLOW. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+    <table name="(P0420) CAT EFFICIENCY BELOW THRESHOLD" storageaddress="2CA0D" />
+    <table name="(P0442) EVAP LEAK DETECTED (SMALL)" storageaddress="2CA11" />
+    <table name="(P0447) EVAP VENT CONTROL CIRCUIT OPEN" storageaddress="2C971" />
+    <table name="(P0448) EVAP VENT CONTROL CIRCUIT SHORTED" storageaddress="2C975" />
+    <table name="(P0451) EVAP PRESSURE SENSOR RANGE/PERF" storageaddress="2C845" />
+    <table name="(P0452) EVAP PRESSURE SENSOR LOW INPUT" storageaddress="2C839" />
+    <table name="(P0453) EVAP PRESSURE SENSOR HIGH INPUT" storageaddress="2C83D" />
+    <table name="(P0456) EVAP LEAK DETECTED (VERY SMALL)" storageaddress="2CA19" />
+    <table name="(P0457) EVAP LEAK DETECTED (FUEL CAP)" storageaddress="2CA4D" />
+    <table name="(P0458) EVAP PURGE VALVE CIRCUIT LOW" storageaddress="2C94D" />
+    <table name="(P0459) EVAP PURGE VALVE CIRCUIT HIGH" storageaddress="2C951" />
+    <table name="(P0461) FUEL LEVEL SENSOR RANGE/PERF" storageaddress="2C809" />
+    <table name="(P0462) FUEL LEVEL SENSOR LOW INPUT" storageaddress="2C801" />
+    <table name="(P0463) FUEL LEVEL SENSOR HIGH INPUT" storageaddress="2C805" />
+    <table name="(P0464) FUEL LEVEL SENSOR INTERMITTENT" storageaddress="2C7F9" />
+    <table name="(P0483) RADIATOR FAN RATIONALITY CHECK" storageaddress="2C929" />
+    <table name="(P0500) VEHICLE SPEED SENSOR A" storageaddress="2C7B9" />
+    <table name="(P0506) IDLE CONTROL RPM LOWER THAN EXPECTED" storageaddress="2C8F9" />
+    <table name="(P0507) IDLE CONTROL RPM HIGH THAN EXPECTED" storageaddress="2C8FD" />
+    <table name="(P0508) IDLE CONTROL CIRCUIT LOW" storageaddress="2C8ED" />
+    <table name="(P0509) IDLE CONTROL CIRCUIT HIGH" storageaddress="2C8F1" />
+    <table name="(P0512) STARTER REQUEST CIRCUIT" storageaddress="2C831" />
+    <table name="(P0604) CONTROL MODULE RAM ERROR" storageaddress="2C79D" />
+	<scaling name="(P0661)INDUCTIONVALVECONTROLSOLENOIDCIRCUITLOWINPUTLOW" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="030661"/>
+	</scaling>
+	<table name="(P0661) INDUCTION VALVE CONTROL SOLENOID CIRCUIT LOW INPUT LOW" category="Diagnostic Trouble Codes" type="1D" scaling="(P0661)INDUCTIONVALVECONTROLSOLENOIDCIRCUITLOWINPUTLOW" storageaddress="2C969">
+		<description>INDUCTION VALVE CONTROL SOLENOID CIRCUIT LOW INPUT LOW. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+	<scaling name="(P0662)INDUCTIONVALVECONTROLSOLENOIDCIRCUITHIGHINPUTHIGH" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="030662"/>
+	</scaling>
+	<table name="(P0662) INDUCTION VALVE CONTROL SOLENOID CIRCUIT HIGH INPUT HIGH" category="Diagnostic Trouble Codes" type="1D" scaling="(P0662)INDUCTIONVALVECONTROLSOLENOIDCIRCUITHIGHINPUTHIGH" storageaddress="2C96D">
+		<description>INDUCTION VALVE CONTROL SOLENOID CIRCUIT HIGH INPUT HIGH. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+    <table name="(P0691) RADIATOR FAN CIRCUIT LOW" storageaddress="2C919" />
+    <table name="(P0692) RADIATOR FAN CIRCUIT HIGH" storageaddress="2C91D" />
+    <table name="(P0703) BRAKE SWITCH INPUT MALFUNCTION" storageaddress="2C995" />
+    <table name="(P0705) TRANSMISSION RANGE SENSOR MALFUNCTION" storageaddress="2C98D" />
+    <table name="(P0710) ATF TEMP SENSOR MALFUNCTION" storageaddress="2C989" />
+    <table name="(P0715) TORQUE CONVERTER TURBINE SPEED MALFUNCTION" storageaddress="2CAF5" />
+    <table name="(P0720) AT VEHICLE SPEED SENSOR HIGH" storageaddress="2C97D" />
+    <table name="(P0725) ENGINE SPEED INPUT MALFUNCTION" storageaddress="2C981" />
+    <table name="(P0731) GEAR 1 INCORRECT RATIO" storageaddress="2C9B5" />
+    <table name="(P0732) GEAR 2 INCORRECT RATIO" storageaddress="2C9B9" />
+    <table name="(P0733) GEAR 3 INCORRECT RATIO" storageaddress="2C9BD" />
+    <table name="(P0734) GEAR 4 INCORRECT RATIO" storageaddress="2C9C5" />
+    <table name="(P0741) TORQUE CONVERTER CLUTCH MALFUNCTION" storageaddress="2C999" />
+    <table name="(P0743) TORQUE CONVERTER CLUTCH LOCK-UP DUTY SOLENOID" storageaddress="2C9B1" />
+    <table name="(P0748) PRESSURE CONTROL LINE PRESSURE DUTY SOLENOID" storageaddress="2C9AD" />
+    <table name="(P0753) SHIFT SOLENOID A ELECTRICAL" storageaddress="2C9A1" />
+    <table name="(P0758) SHIFT SOLENOID B ELECTRICAL" storageaddress="2C9A5" />
+    <table name="(P0778) AT 2-4 BRAKE PRESSURE SOLENOID MALFUNCTION" storageaddress="2CB01" />
+    <table name="(P0785) AT 2-4 BRAKE TIMING SOLENOID MALFUNCTION" storageaddress="2CAFD" />
+    <table name="(P0851) NEUTRAL SWITCH INPUT LOW" storageaddress="2C869" />
+    <table name="(P0852) NEUTRAL SWITCH INPUT HIGH" storageaddress="2C879" />
+    <table name="(P0864) TCM COMMUNICATION RANGE/PERF" storageaddress="2C92D" />
+    <table name="(P0865) TCM COMMUNICATION CIRCUIT LOW" storageaddress="2C959" />
+    <table name="(P0866) TCM COMMUNICATION CIRCUIT HIGH" storageaddress="2C95D" />
+    <table name="(P1110) ATMOS. PRESSURE SENSOR LOW INPUT" storageaddress="2CAC1" />
+    <table name="(P1111) ATMOS. PRESSURE SENSOR HIGH INPUT" storageaddress="2CAC5" />
+    <table name="(P1112) ATMOS. PRESSURE SENSOR RANGE/PERF" storageaddress="2CAC9" />
+    <table name="(P1134) FRONT O2 SENSOR MICROCOMPUTER" storageaddress="2CA7D" />
+    <table name="(P1139) FRONT O2 SENSOR RANGE/PERF" storageaddress="2CAE5" />
+	<scaling name="(P1140)FRONTO2SENSORRANGE/PERFB2S1" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="031140"/>
+	</scaling>
+	<table name="(P1140) FRONT O2 SENSOR RANGE/PERF B2 S1" category="Diagnostic Trouble Codes" type="1D" scaling="(P1140)FRONTO2SENSORRANGE/PERFB2S1" storageaddress="2CAE9">
+		<description>FRONT O2 SENSOR RANGE/PERF B2 S1. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+    <table name="(P1142) MAF SENSOR LOW INPUT" storageaddress="2C7E5" />
+    <table name="(P1146) MAP SENSOR RANGE/PERF" storageaddress="2CADD" />
+    <table name="(P1152) FRONT O2 SENSOR RANGE/PERF LOW B1 S1" storageaddress="2C9F9" />
+    <table name="(P1153) FRONT O2 SENSOR RANGE/PERF HIGH B1 S1" storageaddress="2C9FD" />
+	<scaling name="(P1154)O2SENSORRANGE/PERFLOWB2S1" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="031154"/>
+	</scaling>
+	<table name="(P1154) O2 SENSOR RANGE/PERF LOW B2 S1" category="Diagnostic Trouble Codes" type="1D" scaling="(P1154)O2SENSORRANGE/PERFLOWB2S1" storageaddress="2CB19">
+		<description>O2 SENSOR RANGE/PERF LOW B2 S1. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+	<scaling name="(P1155)O2SENSORRANGE/PERFHIGHB2S1" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="031155"/>
+	</scaling>
+	<table name="(P1155) O2 SENSOR RANGE/PERF HIGH B2 S1" category="Diagnostic Trouble Codes" type="1D" scaling="(P1155)O2SENSORRANGE/PERFHIGHB2S1" storageaddress="2CB1D">
+		<description>O2 SENSOR RANGE/PERF HIGH B2 S1. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+    <table name="(P1230) FUEL PUMP CONTROL UNIT MALFUNCTION" storageaddress="2CA21" />
+    <table name="(P1400) FUEL TANK PRESSURE SOL. LOW" storageaddress="2C945" />
+    <table name="(P1420) FUEL TANK PRESSURE SOL. HIGH INPUT" storageaddress="2C949" />
+    <table name="(P1443) VENT CONTROL SOLENOID FUNCTION PROBLEM" storageaddress="2C961" />
+    <table name="(P1507) IDLE CONTROL MALFUNCTION (FAIL-SAFE)" storageaddress="2C8F5" />
+    <table name="(P1518) STARTER SWITCH LOW INPUT" storageaddress="2C82D" />
+    <table name="(P1560) BACK-UP VOLTAGE MALFUNCTION" storageaddress="2CB5D" />
+	<scaling name="(P1698)ENGINETORQUECONTROLCUTSIGNALCIRCUITLOWINPUT" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="031698"/>
+	</scaling>
+	<table name="(P1698) ENGINE TORQUE CONTROL CUT SIGNAL CIRCUIT LOW INPUT" category="Diagnostic Trouble Codes" type="1D" scaling="(P1698)ENGINETORQUECONTROLCUTSIGNALCIRCUITLOWINPUT" storageaddress="2C901">
+		<description>ENGINE TORQUE CONTROL CUT SIGNAL CIRCUIT LOW INPUT. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+	<scaling name="(P1699)ENGINETORQUECONTROLCUTSIGNALCIRCUITHIGHINPUT" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="031699"/>
+	</scaling>
+	<table name="(P1699) ENGINE TORQUE CONTROL CUT SIGNAL CIRCUIT HIGH INPUT" category="Diagnostic Trouble Codes" type="1D" scaling="(P1699)ENGINETORQUECONTROLCUTSIGNALCIRCUITHIGHINPUT" storageaddress="2C905">
+		<description>ENGINE TORQUE CONTROL CUT SIGNAL CIRCUIT HIGH INPUT. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+    <table name="(P1700) TPS CIRCUIT MALFUNCTION (AT)" storageaddress="2C985" />
+    <table name="(P1701) CRUISE CONTROL SET SIGNAL MALFUNCTION (AT)" storageaddress="2C991" />
+    <table name="(P1703) LOW CLUTCH TIMING SOLENOID MALFUNCTION (AT)" storageaddress="2CAF9" />
+    <table name="(P1711) ENGINE TORQUE SIGNAL #1 MALFUNCTION" storageaddress="2CAED" />
+    <table name="(P1712) ENGINE TORQUE SIGNAL #2 MALFUNCTION" storageaddress="2CAF1" />
+</rom>

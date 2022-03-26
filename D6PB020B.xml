@@ -1,0 +1,100 @@
+<rom>
+	<romid>
+		<xmlid>D6PB020B</xmlid>
+		<internalidaddress>200</internalidaddress>
+		<internalidstring>D6PB020B</internalidstring>
+		<ecuid>371A253005</ecuid>
+		<make>Subaru</make>
+		<market>USDM</market>
+		<model>Outback</model>
+		<submodel>H6</submodel>
+		<transmission>AT</transmission>
+		<year>2004</year>
+		<flashmethod>wrx02</flashmethod>
+		<memmodel>68HC16Y5</memmodel>
+	</romid>
+
+	<include>16BITBASE</include>
+	
+	<scaling name="(P1698)ENGINETORQUECONTROLCUTSIGNALCIRCUITLOW" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="031698"/>
+	</scaling>
+	
+	<scaling name="(P0230)FUELPUMPPRIMARYCIRCUIT2" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="030230"/>
+	</scaling>
+	
+	<table name="Idle Speed Target A (AT)" address="29d83">
+	</table>
+
+	<table name="Idle Speed Target B (AT)" address="29da9">
+	</table>
+
+	<table name="Idle Speed Target C (AT)" address="29dcf">
+	</table>
+
+	<table name="Idle Speed Target D (AT)" address="29df5">
+	</table>
+	
+	<table name="Min Idle Speed A/C (AT)" address="29e15">
+	</table>
+
+	<table name="Min Idle Speed Startup (AT)" address="29fca">
+	</table>
+
+	<table name="Min Idle Speed High Electrical Load (AT)" address="29fc6">
+	</table>
+	
+	<table name="Rev Limit (Fuel Cut)" address="293e8">
+	</table>
+
+	<table name="Base Timing A_" address="294b2">
+		<table name="Manifold Pressure" address="2949c" elements="10" scaling="g/rev"/>
+		<table name="Engine Speed" address="29475" elements="19"/>
+	</table>
+
+	<table name="Base Timing B_" address="295ad">
+		<table name="Manifold Pressure" address="29597" elements="10" scaling="g/rev"/>
+		<table name="Engine Speed" address="29570" elements="19"/>
+	</table>
+
+	<table name="Base Timing A" address="296a8">
+		<table name="Engine Load" address="29692" elements="10"/>
+		<table name="Engine Speed" address="2966b" elements="19"/>
+	</table>
+
+	<table name="Base Timing B" address="297a3">
+		<table name="Engine Load" address="2978d" elements="10"/>
+		<table name="Engine Speed" address="29766" elements="19"/>
+	</table>
+
+	<table name="Base Timing Idle (In-Gear)(Above Speed Threshold)" address="29455">
+	</table>
+
+	<table name="Base Timing Idle Vehicle Speed Threshold" address="2944b">
+	</table>
+	
+	<table name="(P1420) FUEL TANK PRESSURE SOL. HIGH INPUT" address="2c269" />
+	<table name="(P1400) FUEL TANK PRESSURE SOL. LOW" address="2c265" />
+	<table name="(P0519) IDLE CONTROL MALFUNCTION (FAIL-SAFE)" address="2c635" />
+	<table name="(P0447) EVAP VENT CONTROL CIRCUIT OPEN" address="2c291" />
+	<table name="(P0453) EVAP PRESSURE SENSOR HIGH INPUT" address="2c15d" />
+	<table name="(P0037) REAR O2 SENSOR LOW INPUT" address="2c3d5" />
+	<table name="(P0038) REAR O2 SENSOR HIGH INPUT" address="2c3cd" />
+	<table name="(P0137) REAR O2 SENSOR LOW VOLTAGE" address="2c399" />
+	<table name="(P0138) REAR O2 SENSOR HIGH VOLTAGE" address="2c3b1" />
+	<table name="(P0139) REAR O2 SENSOR SLOW RESPONSE" address="2c311" />
+	<table name="(P0230) FUEL PUMP PRIMARY CIRCUIT" address="2c625" category="Diagnostic Trouble Codes" type="1D" scaling="(P0230)FUELPUMPPRIMARYCIRCUIT2">
+		<description>FUEL PUMP PRIMARY CIRCUIT. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+	<table name="(P0420) CAT EFFICIENCY BELOW THRESHOLD" address="2c32d"/>
+	<table name="(P0864) TCM COMMUNICATION RANGE/PERF" address="2c24d" />
+	<table name="(P0865) TCM COMMUNICATION CIRCUIT LOW" address="2c279" />
+	<table name="(P0866) TCM COMMUNICATION CIRCUIT HIGH" address="2c27d"/>
+	<table name="(P1446) FUEL TANK SENSOR CONTROL CIRCUIT LOW" address="2c1f1" />
+	<table name="(P1698) ENGINE TORQUE CONTROL CUT SIGNAL CIRCUIT LOW" address="2c221" category="Diagnostic Trouble Codes" type="1D" scaling="(P1698)ENGINETORQUECONTROLCUTSIGNALCIRCUITLOW">
+		<description>ENGINE TORQUE CONTROL CUT SIGNAL CIRCUIT LOW. Change to disabled to deactivate. Off-road use only.</description>
+	</table>
+</rom>
