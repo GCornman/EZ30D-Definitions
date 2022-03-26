@@ -1,5 +1,5 @@
 # EZ30D Definitions
-01-04 Subaru EZ30D ECU definitions I've collected from various sources, and some I've created myself.  
+01-04 Subaru EZ30D ECU definitions I've mostly created myself. A couple I've collected from other sources.
 I only defined what I needed - quick and dirty. Some parameters and codes might be defined in one revision but not another.  
 
 Feel free to use what you can. I might update these if you ask. Adding OBDII codes to them is easy if that's what you need.  
