@@ -169,14 +169,22 @@
 	
 	<table name="(P0037) REAR O2 SENSOR LOW INPUT" address="2ca35" />
 	<table name="(P0038) REAR O2 SENSOR HIGH INPUT" address="2ca2d" />
+	<table name="(P0181) FUEL TEMP SENSOR A RANGE/PERF" address="2c7f5" />
+	<table name="(P0182) FUEL TEMP SENSOR A LOW INPUT" address="2c7ed" />
+	<table name="(P0183) FUEL TEMP SENSOR A HIGH INPUT" address="2c7f1" />
 	<table name="(P0137) REAR O2 SENSOR LOW VOLTAGE" address="2c9f9" />
 	<table name="(P0138) REAR O2 SENSOR HIGH VOLTAGE" address="2ca11" />
 	<table name="(P0139) REAR O2 SENSOR SLOW RESPONSE" address="2c971" />
 	<table name="(P0420) CAT EFFICIENCY BELOW THRESHOLD" address="2c98d"/>
 	<table name="(P0447) EVAP VENT CONTROL CIRCUIT OPEN" address="2c8f1"/>
+	<table name="(P0451) EVAP PRESSURE SENSOR RANGE/PERF" address="2c7c5"/>
+	<table name="(P0452) EVAP PRESSURE SENSOR LOW INPUT" address="2c7b9"/>
+	<table name="(P0453) EVAP PRESSURE SENSOR HIGH INPUT" address="2c7bd"/>
 	<table name="(P0864) TCM COMMUNICATION RANGE/PERF" address="2c8ad" />
 	<table name="(P0865) TCM COMMUNICATION CIRCUIT LOW" address="2c8d9" />
 	<table name="(P0866) TCM COMMUNICATION CIRCUIT HIGH" address="2c8dd"/>
+	<table name="(P1400) FUEL TANK PRESSURE SOL. LOW" address="2c8c5"/>
+	<table name="(P1420) FUEL TANK PRESSURE SOL. HIGH INPUT" address="2c8c9"/>
 	<table name="(P1507) IDLE CONTROL MALFUNCTION (FAIL-SAFE)" address="2c875" />
 	<table name="(P1698) ENGINE TORQUE CONTROL CUT SIGNAL CIRCUIT LOW" address="2c881" category="Diagnostic Trouble Codes" type="1D" scaling="(P1698)ENGINETORQUECONTROLCUTSIGNALCIRCUITLOW">
 		<description>ENGINE TORQUE CONTROL CUT SIGNAL CIRCUIT LOW. Change to disabled to deactivate. Off-road use only.</description>
