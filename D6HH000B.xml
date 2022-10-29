@@ -21,6 +21,11 @@
 		<data name="enabled" value="031698"/>
 	</scaling>
 	
+	<scaling name="(P0400)EGRFLOW" storagetype="bloblist">
+		<data name="disabled" value="050000"/>
+		<data name="enabled" value="030400"/>
+	</scaling>
+	
 	<table name="Unknown Timing Map" category="Unconfirmed - Timing" address="2ade9" type="3D" level="4" scaling="BaseIgnitionTiming(degreesBTDC)">
 		<table name="Engine Load" address="2add3" type="X Axis" elements="10" scaling="g/rev"/>
 		<table name="Engine Speed" address="2adb0" type="Y Axis" elements="17" scaling="EngineSpeed(RPM)"/>
@@ -172,6 +177,8 @@
 	<table name="(P0137) REAR O2 SENSOR LOW VOLTAGE" address="2c9f9" />
 	<table name="(P0138) REAR O2 SENSOR HIGH VOLTAGE" address="2ca11" />
 	<table name="(P0139) REAR O2 SENSOR SLOW RESPONSE" address="2c971" />
+	<table name="(P0400) EGR FLOW" address="2c99d" category="Diagnostic Trouble Codes" type="1D" scaling="(P0400)EGRFLOW">
+	</table>
 	<table name="(P0420) CAT EFFICIENCY BELOW THRESHOLD" address="2c98d"/>
 	<table name="(P0447) EVAP VENT CONTROL CIRCUIT OPEN" address="2c8f1"/>
 	<table name="(P0864) TCM COMMUNICATION RANGE/PERF" address="2c8ad" />
