@@ -174,6 +174,7 @@
 	<table name="(P0139) REAR O2 SENSOR SLOW RESPONSE" address="2c971" />
 	<table name="(P0420) CAT EFFICIENCY BELOW THRESHOLD" address="2c98d"/>
 	<table name="(P0463) FUEL LEVEL SENSOR HIGH INPUT" address="2c785"/>
+	<table name="(P0461) FUEL LEVEL SENSOR RANGE/PERF" address="2c789"/>
 	<table name="(P0864) TCM COMMUNICATION RANGE/PERF" address="2c8ad" />
 	<table name="(P0865) TCM COMMUNICATION CIRCUIT LOW" address="2c8d9" />
 	<table name="(P0866) TCM COMMUNICATION CIRCUIT HIGH" address="2c8dd"/>
